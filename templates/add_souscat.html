@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Unit{% endblock %}
+
+{% block content %}
+  <h2>Add Sous categorie</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add </button>
+  </form>
+  <a href="{% url 'mainpage' %}" class="btn btn-primary">Go to Main Page</a>
+  <h3>Les Sous Category</h3>
+  <table>
+      <thead>
+          <tr>
+              <th>Sous Category</th>
+              <th>Delete</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for souscategorie in souscategories %}
+              <tr>
+                  <td>{{ souscategorie.name }}</td>
+                  <td><a href="{% url 'delete_souscategorie' souscategorie.id %}">Delete</a></td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table> 
+{% endblock %}

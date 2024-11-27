@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+
+<div class="dashboard-container">    
+    <div class="dashboard-row">
+
+        <div class="dashboard-card">
+            <h5 class="card-title">Category</h5>
+            <div id="category-sums-chart"></div>
+        </div>
+    </div>
+
+<div class="dashboard-row">
+    <div class="dashboard-card">
+        <h5 class="card-title">Daily Amounts</h5>
+        <div id="daily-amounts-chart"></div>
+    </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    var categorySumsData = [
+    {% for category_sum in category_sums %}
+    { x: "{% if category_sum.categorie == 'indiv' %}SGL{% elif category_sum.categorie == 'double' %}DBL{% elif category_sum.categorie == 'triple' %}TPL{% else %}{{ category_sum.categorie }}{% endif %}", y: {{ category_sum.category_sum }} },
+    {% endfor %}
+];
+
+var categorySumsChartOptions = {
+    chart: {
+        type: 'pie',
+        height: 300 // Adjust the chart height as needed
+    },
+    series: categorySumsData.map(data => data.y),
+    labels: categorySumsData.map(data => data.x),
+    responsive: [{
+        breakpoint: 480,
+        options: {
+            chart: {
+                width: 300
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }]
+};
+
+// Create the Category Sums Pie Chart
+var categorySumsPieChart = new ApexCharts(document.querySelector('#category-sums-chart'), categorySumsChartOptions);
+categorySumsPieChart.render();
+
+var dailyAmountsData = [
+        {% for daily_amount in daily_amount_sums %}
+            { x: new Date("{{ daily_amount.date }}"), y: {{ daily_amount.daily_amount_sum }} },
+        {% endfor %}
+    ];
+
+    var dailyAmountsChartOptions = {
+        chart: {
+            type: 'line',
+            height: 300 // Adjust the chart height as needed
+        },
+        series: [{
+            name: 'Amount',
+            data: dailyAmountsData
+        }],
+        xaxis: {
+            type: 'datetime'
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 300
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var dailyAmountsChart = new ApexCharts(document.querySelector('#daily-amounts-chart'), dailyAmountsChartOptions);
+    dailyAmountsChart.render();
+});
+
+
+</script>
+
+<style>
+    .dashboard-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -10px; /* Adjust margin as needed */
+    }
+    
+    .dashboard-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        flex: 1;
+        margin: 10px; /* Adjust margin as needed */
+    
+    }
+
+    .dashboard-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .card-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .card-text.price {
+        font-size: 18px;
+    }
+
+    .association-list li {
+        margin-bottom: 6px;
+    }
+
+    /* Style the table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f8f8;
+    }
+</style>
+
+{% endblock content %} 

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Set Balance{% endblock %}
+
+{% block content %}
+    <h2>Set Your Balance</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><strong>Warning:</strong> Setting a new balance will delete all your transactions.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Balance</button>
+    </form>
+{% endblock %}

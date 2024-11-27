@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .user-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user-content li {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: #ecf0f1;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: #ecf0f1;
+        }
+
+        .btn-danger:hover, .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .logout-button {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: #ecf0f1;
+            padding: 12px 24px;
+            border-radius: 50px;
+        }
+
+        .logout-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+
+    <h1>Welcome, {{ user.username }}!</h1>
+
+    <!-- Display balance -->
+    <p>Your balance: {{ balance }} Dt</p>
+
+    <section class="user-content">
+        <!-- Display user-specific content -->
+        <ul>
+            {% for post in user_content %}
+                <li>{{ post }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- Add buttons to increase and decrease balance -->
+
+
+    <!-- Logout button -->
+{% endblock %}

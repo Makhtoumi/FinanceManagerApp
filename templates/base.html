@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'mainpage' %}" class="navbar-brand">Eperon</a>
+        <ul class="nav-links">
+            <li><a href="{% url 'increase_balance' %}" class="btn btn-danger">Increase Balance</a></li>
+            <li><a href="{% url 'decrease_balance' %}" class="btn btn-danger">Decrease Balance</a></li>
+            <li><a href="{% url 'set_balance' %}" class="btn btn-danger">Set a New Balance</a></li>
+            <li><a href="{% url 'add_unit' %}" class="btn btn-danger">Add Category</a></li>
+            <li><a href="{% url 'add_scategorie' %}" class="btn btn-danger">Add Sous Category</a></li>
+            <li><a href="{% url 'dashboard' %}" class="btn btn-danger">Dashboard</a></li>
+            <li><a href="{% url 'logout' %}" class="logout-button">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

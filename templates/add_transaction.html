@@ -1,0 +1,17 @@
+<!-- add_transaction.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Transaction</title>
+</head>
+<body>
+    <h2>Add Transaction</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Transaction</button>
+    </form>
+    <br>
+    <a href="{% url 'mainpage' %}">Go back to Main Page</a>
+</body>
+</html>

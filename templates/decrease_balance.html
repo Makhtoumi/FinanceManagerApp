@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Decrease Balance{% endblock %}
+
+{% block content %}
+    <h2>Decrease Balance</h2>
+
+    <form method="post" onsubmit="return validateAmount()">
+        {% csrf_token %}
+        <label for="amount">Amount to Decrease:</label>
+        <input type="text" id="amount" name="amount" step="0.01" required>
+        <select id="unit" name="unit">
+            {% for unit in units %}
+                <option value="{{ unit.name }}">{{ unit.name }}</option>
+            {% endfor %}
+        </select>
+
+        <select id="souscat" name="souscat">
+            {% for unit in souscat %}
+                <option value="{{ unit.name }}">{{ unit.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Decrease Balance</button>
+    </form>
+    <a href="{% url 'increase_balance' %}" class="btn btn-primary">Go to increase</a>
+
+
+    <h3>Transaction History:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in historique %}
+                <tr>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.categorie }}</td>
+                    <td>{{ transaction.souscategorie }}</td>
+                    <td>{{ transaction.descrption }}</td>
+                    <td>{{ transaction.date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+    {% for t in walita%}
+    <h3>Your Balance {{t.balance}} Dt</h3>
+    {% endfor %}
+    <a href="{% url 'mainpage' %}" class="btn btn-primary">Go to Main Page</a>
+
+    <script>
+        function validateAmount() {
+            var amount = document.getElementById('amount').value;
+            if (!isNumeric(amount)) {
+                alert('Please enter a valid numeric amount.');
+                return false;
+            }
+            return true;
+        }
+
+        function isNumeric(value) {
+            return !isNaN(parseFloat(value)) && isFinite(value);
+        }
+    </script>
+{% endblock %}

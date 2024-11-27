@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Unit{% endblock %}
+
+{% block content %}
+  <h2>Add Category</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Unit</button>
+  </form>
+  <a href="{% url 'mainpage' %}" class="btn btn-primary">Go to Main Page</a>
+
+  <h3>Les Category</h3>
+  <table>
+      <thead>
+          <tr>
+              <th>Category</th>
+              <th>Delete</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for categorie in categories %}
+              <tr>
+                  <td>{{ categorie.name }}</td>
+                  <td><a href="{% url 'delete_categorie' categorie.id %}">Delete</a></td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table> 
+{% endblock %}
